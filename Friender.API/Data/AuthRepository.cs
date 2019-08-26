@@ -15,7 +15,7 @@ namespace Friender.API.Data
     }
     public async Task<User> Login(string username, string password)
     {
-      var user = await _context.Users.FirstOrDefaultAsync(user => user.Username == username);
+      var user = await _context.Users.FirstOrDefaultAsync(usr => usr.Username == username);
     
       if (user == null)
         return null;
