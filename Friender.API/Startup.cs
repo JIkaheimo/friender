@@ -38,6 +38,7 @@ namespace Friender.API
       services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
       services.AddCors();
       services.AddScoped<IAuthRepository, AuthRepository>();
+      services.AddScoped<IFrienderRepository, FrienderRepository>();
       services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
       {
         options.TokenValidationParameters = new TokenValidationParameters
