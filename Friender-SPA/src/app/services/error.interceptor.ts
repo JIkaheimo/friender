@@ -28,6 +28,15 @@ export class ErrorInterceptor implements HttpInterceptor {
               }
             }
           }
+
+          if (modalStateErrors === '' && typeof serverError === 'object') {
+            for (const key in serverError) {
+              if (serverError[key]) {
+                modalStateErrors += serverError[key];
+              }
+            }
+          }
+
           return throwError(modalStateErrors || serverError || 'Server Error');
         }
       })
