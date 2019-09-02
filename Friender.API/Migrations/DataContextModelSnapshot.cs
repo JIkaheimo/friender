@@ -29,7 +29,7 @@ namespace Friender.API.Migrations
 
                     b.Property<string>("Url");
 
-                    b.Property<int?>("UserId");
+                    b.Property<int>("UserId");
 
                     b.HasKey("Id");
 
@@ -76,9 +76,10 @@ namespace Friender.API.Migrations
 
             modelBuilder.Entity("Friender.API.Models.Photo", b =>
                 {
-                    b.HasOne("Friender.API.Models.User")
+                    b.HasOne("Friender.API.Models.User", "User")
                         .WithMany("Photos")
-                        .HasForeignKey("UserId");
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618
         }
