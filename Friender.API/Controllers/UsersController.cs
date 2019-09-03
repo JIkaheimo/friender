@@ -1,5 +1,8 @@
+using System.Collections.Generic;
 using System.Threading.Tasks;
+using AutoMapper;
 using Friender.API.Data;
+using Friender.API.Dtos;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -11,8 +14,10 @@ namespace Friender.API.Controllers
   public class UsersController : ControllerBase
   {
     private readonly IFrienderRepository _repo;
-    public UsersController(IFrienderRepository repo)
+    private readonly IMapper _mapper;
+    public UsersController(IFrienderRepository repo, IMapper mapper)
     {
+      _mapper = mapper;
       _repo = repo;
     }
 
@@ -20,7 +25,7 @@ namespace Friender.API.Controllers
     public async Task<IActionResult> GetUsers()
     {
       var users = await _repo.GetUsers();
-      return Ok(users);
+      return Ok(_mapper.Map<IEnumerable<UserForListDto>>(users));
     }
 
     [HttpGet("{id}")]
@@ -28,7 +33,7 @@ namespace Friender.API.Controllers
     {
       var user = await _repo.GetUser(id);
 
-      if (user != null) return Ok(user);
+      if (user != null) return Ok(_mapper.Map<UserForDetailedDto>(user));
 
       return NotFound();
     }

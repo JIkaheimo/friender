@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
+using AutoMapper;
 using Friender.API.Data;
 using Friender.API.Helpers;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -41,6 +42,7 @@ namespace Friender.API
           opt.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
         });
       services.AddCors();
+      services.AddAutoMapper(typeof(FrienderRepository).Assembly);
       services.AddScoped<IAuthRepository, AuthRepository>();
       services.AddScoped<IFrienderRepository, FrienderRepository>();
       services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
