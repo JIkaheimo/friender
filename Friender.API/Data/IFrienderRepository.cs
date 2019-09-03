@@ -4,7 +4,7 @@ using Friender.API.Models;
 
 namespace Friender.API.Data
 {
-  interface IFrienderRepository
+  public interface IFrienderRepository
   {
     void Add<T>(T entity) where T : class;
     void Delete<T>(T entity) where T : class;
