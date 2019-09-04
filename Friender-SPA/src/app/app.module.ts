@@ -19,6 +19,11 @@ import { MessagesComponent } from './messages/messages.component';
 import { appRoutes } from './routes';
 import { MemberCardComponent } from './members/member-card/member-card.component';
 import { MemberDetailComponent } from './members/member-detail/member-detail.component';
+import { AlertifyService } from './services/alertify.service';
+import { AuthGuard } from './guards/auth.guard';
+import { UserService } from './services/user.service';
+import { UserDetailResolver } from './resolvers/user-detail.resolver';
+import { UserListResolver } from './resolvers/user-list.resolver';
 
 export function tokenGetter() {
   return localStorage.getItem('token');
@@ -54,7 +59,12 @@ export function tokenGetter() {
    ],
    providers: [
       AuthService,
-      ErrorInterceptorProvider
+      ErrorInterceptorProvider,
+      AlertifyService,
+      AuthGuard,
+      UserService,
+      UserDetailResolver,
+      UserListResolver
    ],
    bootstrap: [
       AppComponent
