@@ -1,15 +1,15 @@
-import { BrowserModule } from '@angular/platform-browser';
+import { BrowserModule, HammerGestureConfig, HAMMER_GESTURE_CONFIG } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { BsDropdownModule, TabsModule } from 'ngx-bootstrap';
 import { RouterModule } from '@angular/router';
 import { JwtModule } from '@auth0/angular-jwt';
+import { NgxGalleryModule } from 'ngx-gallery';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { NavComponent } from './nav/nav.component';
-import { AuthService } from './services/auth.service';
+import { NavComponent } from './nav/nav.component';;
 import { HomeComponent } from './home/home.component';
 import { RegisterComponent } from './register/register.component';
 import { ErrorInterceptorProvider } from './services/error.interceptor';
@@ -19,14 +19,18 @@ import { MessagesComponent } from './messages/messages.component';
 import { appRoutes } from './routes';
 import { MemberCardComponent } from './members/member-card/member-card.component';
 import { MemberDetailComponent } from './members/member-detail/member-detail.component';
-import { AlertifyService } from './services/alertify.service';
-import { AuthGuard } from './guards/auth.guard';
-import { UserService } from './services/user.service';
 import { UserDetailResolver } from './resolvers/user-detail.resolver';
 import { UserListResolver } from './resolvers/user-list.resolver';
 
 export function tokenGetter() {
   return localStorage.getItem('token');
+}
+
+export class CustomHammerConfig extends HammerGestureConfig {
+  overrides = {
+    pinch: { enable: false },
+    rotate: { enable: false }
+  };
 }
 
 @NgModule({
@@ -49,6 +53,7 @@ export function tokenGetter() {
       BsDropdownModule.forRoot(),
       TabsModule.forRoot(),
       RouterModule.forRoot(appRoutes),
+      NgxGalleryModule,
       JwtModule.forRoot({
         config: {
           tokenGetter,
@@ -58,13 +63,10 @@ export function tokenGetter() {
       })
    ],
    providers: [
-      AuthService,
       ErrorInterceptorProvider,
-      AlertifyService,
-      AuthGuard,
-      UserService,
       UserDetailResolver,
-      UserListResolver
+      UserListResolver,
+      { provide: HAMMER_GESTURE_CONFIG, useClass: CustomHammerConfig }
    ],
    bootstrap: [
       AppComponent
